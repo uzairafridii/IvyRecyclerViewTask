@@ -1,6 +1,7 @@
 package com.uzair.recyclerviewtask.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,10 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.uzair.recyclerviewtask.R;
 import com.uzair.recyclerviewtask.model.Items;
+import com.uzair.recyclerviewtask.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChildRecyclerAdapter extends RecyclerView.Adapter<ChildRecyclerAdapter.MYItemViewHolder> {
+public class ChildRecyclerAdapter extends RecyclerView.Adapter<ChildRecyclerAdapter.MYItemViewHolder>
+{
     private List<Items> itemsList;
     private Context context;
     private int ctnSize, total, pieces, totalOfCtn;
@@ -87,7 +93,7 @@ public class ChildRecyclerAdapter extends RecyclerView.Adapter<ChildRecyclerAdap
                     holder.totalPcs.setText("T.Pcs : " + total);
                 } catch (Exception e) {
 
-                    holder.totalPcs.setText("T.Pcs : "+pieces);
+                    holder.totalPcs.setText("T.Pcs : " + pieces);
                     Log.d("childRecyclerError", "afterTextChanged: " + e.getMessage().toString());
                 }
 
@@ -115,7 +121,7 @@ public class ChildRecyclerAdapter extends RecyclerView.Adapter<ChildRecyclerAdap
                     holder.totalPcs.setText("T.Pcs : " + total);
                 } catch (Exception e) {
 
-                    holder.totalPcs.setText("T.Pcs : "+totalOfCtn);
+                    holder.totalPcs.setText("T.Pcs : " + totalOfCtn);
                     Log.d("childRecyclerError", "afterTextChanged: " + e.getMessage().toString());
                 }
             }
@@ -128,6 +134,9 @@ public class ChildRecyclerAdapter extends RecyclerView.Adapter<ChildRecyclerAdap
     public int getItemCount() {
         return itemsList.size();
     }
+
+
+
 
     public class MYItemViewHolder extends RecyclerView.ViewHolder {
 

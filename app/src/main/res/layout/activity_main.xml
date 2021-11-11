@@ -9,7 +9,18 @@
     tools:context=".MainActivity">
 
 
+    <SearchView
+        android:id="@+id/searchView"
+        style="@style/Widget.AppCompat.SearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search here..."
+
+        />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/searchView"
         android:id="@+id/rvProducts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.uzair.recyclerviewtask.adapters.ChildRecyclerAdapter;
 import com.uzair.recyclerviewtask.adapters.ProductRecyclerAdapter;
 import com.uzair.recyclerviewtask.model.Product;
 
@@ -27,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvProducts;
     private LinearLayoutManager layoutManager;
     private ProductRecyclerAdapter productAdapter;
-    private int mTotalItemCount = 0;
-    private int mLastVisibleItemPosition;
-    private boolean mIsLoading = false;
-    private int mPostsPerPage = 4;
+    public static int mTotalItemCount = 0;
+    public static int mLastVisibleItemPosition;
+    public static boolean mIsLoading = false;
+    public static int mPostsPerPage = 4;
 
 
     @Override
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         getProducts(null);
 
 
+        /// check for scrolling of recycler view then load the new items
         rvProducts.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -69,8 +72,24 @@ public class MainActivity extends AppCompatActivity {
         // productList = new ArrayList<>();
         productAdapter = new ProductRecyclerAdapter(this);
         rvProducts.setAdapter(productAdapter);
+
+
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                productAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
+    // get the product using node id
     private void getProducts(String nodeId) {
         Query query;
         List<Product> productList = new ArrayList<>();
@@ -90,10 +109,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        /// get the data using query
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                /// add the pr
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     Product product = snap.getValue(Product.class);
                     productList.add(product);

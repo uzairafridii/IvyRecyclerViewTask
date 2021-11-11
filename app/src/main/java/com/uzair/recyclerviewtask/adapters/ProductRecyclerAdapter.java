@@ -1,9 +1,12 @@
 package com.uzair.recyclerviewtask.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.uzair.recyclerviewtask.MainActivity;
 import com.uzair.recyclerviewtask.R;
 import com.uzair.recyclerviewtask.model.Items;
 import com.uzair.recyclerviewtask.model.Product;
@@ -23,14 +27,17 @@ import com.uzair.recyclerviewtask.model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.MyProductViewHolder> {
+public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.MyProductViewHolder>
+implements Filterable
+{
     private List<Product> productList;
     private List<Items> itemList;
     private Context context;
     private DatabaseReference dbRef;
+    private ChildRecyclerAdapter adapter;
 
     public ProductRecyclerAdapter(Context context) {
-        this.productList = productList;
+       // this.productList = ;productList
         this.context = context;
         itemList = new ArrayList<>();
         this.productList = new ArrayList<>();
@@ -49,6 +56,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         Product product = productList.get(position);
         holder.tvProduct.setText(product.getName());
 
+
         Query query = dbRef.child("Items")
                 .orderByChild("productid")
                 .equalTo(product.getUid());
@@ -63,7 +71,8 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                     itemList.add(items);
                 }
 
-                ChildRecyclerAdapter adapter = new ChildRecyclerAdapter(itemList, context);
+
+                adapter = new ChildRecyclerAdapter(itemList, context);
                 holder.setRecyclerViewAdapter(adapter);
 
 
@@ -75,12 +84,15 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             }
         });
 
+
+
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
+
 
     /// add all products
     public void addAll(List<Product> newProduct) {
@@ -95,6 +107,42 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     public String getLastItemId() {
         return productList.get(productList.size() - 1).getUid();
     }
+
+    @Override
+    public Filter getFilter() {
+        return searchFilter;
+    }
+
+
+    private Filter searchFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Items> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(itemList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Items item : itemList) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            itemList.clear();
+            itemList.addAll((List) results.values);
+            notifyDataSetChanged();
+
+            for (int i=0; i<itemList.size(); i++)
+                Log.d("searchItemList", "publishResults: "+itemList.get(0).getName());
+        }
+    };
 
 
     public class MyProductViewHolder extends RecyclerView.ViewHolder {
