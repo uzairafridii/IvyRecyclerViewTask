@@ -29,10 +29,11 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     private Context context;
     private DatabaseReference dbRef;
 
-    public ProductRecyclerAdapter(List<Product> productList, Context context) {
+    public ProductRecyclerAdapter(Context context) {
         this.productList = productList;
         this.context = context;
         itemList = new ArrayList<>();
+        this.productList = new ArrayList<>();
         dbRef = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -74,13 +75,27 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             }
         });
 
-
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
+
+    /// add all products
+    public void addAll(List<Product> newProduct) {
+        int initialSize = productList.size();
+        productList.addAll(newProduct);
+        notifyItemRangeInserted(initialSize, newProduct.size());
+
+    }
+
+
+    /// get last product id
+    public String getLastItemId() {
+        return productList.get(productList.size() - 1).getUid();
+    }
+
 
     public class MyProductViewHolder extends RecyclerView.ViewHolder {
 

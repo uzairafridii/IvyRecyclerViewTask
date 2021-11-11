@@ -18,7 +18,7 @@
         android:text="Sq Code"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/itemQty"
+        app:layout_constraintEnd_toStartOf="@+id/itemPcs"
         app:layout_constraintStart_toEndOf="@+id/itemImage"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
         android:text="Item Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/itemQty"
+        app:layout_constraintEnd_toStartOf="@+id/itemPcs"
         app:layout_constraintStart_toEndOf="@+id/itemImage"
         app:layout_constraintTop_toBottomOf="@+id/itemSqCode" />
 
@@ -51,14 +51,14 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/itemQty"
+        android:id="@+id/itemPcs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="3dp"
         android:layout_marginBottom="9dp"
-        android:text="Qty"
+        android:text="Pcs"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/itemCtn"
@@ -78,7 +78,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/tInputCtn"
         app:layout_constraintStart_toEndOf="@+id/itemName"
-        app:layout_constraintTop_toBottomOf="@+id/itemQty" />
+        app:layout_constraintTop_toBottomOf="@+id/itemPcs" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tvlayoutQty"
@@ -86,12 +86,12 @@
         android:layout_height="24dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/itemQty"
+        app:layout_constraintStart_toEndOf="@+id/itemPcs"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edQty"
+            android:id="@+id/edPcs"
             android:layout_width="93dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -114,7 +114,6 @@
             android:id="@+id/edCtn"
             android:layout_width="93dp"
             android:layout_height="match_parent"
-            android:backgroundTint="@android:color/holo_red_light"
             android:digits="1234567890"
             android:inputType="phone"
             android:padding="4dp"
