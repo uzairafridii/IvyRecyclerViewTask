@@ -162,8 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
                             mItemsList.addAll(itemsList);
                             adapter.notifyDataSetChanged();
-
-
                             mIsLoading = false;
 
                         }
@@ -195,12 +193,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean isSection(int position) {
                 return position == 0
-                        || !item.get(position)
-                        .getProductid().equals(item.get(position - 1).getProductid());
+                        || !item.get(position).getProductid()
+                        .equals(item.get(position - 1).getProductid());
             }
 
             @Override
             public String getSectionHeader(int position) {
+
                 return item.get(position).getProductid();
 
             }
