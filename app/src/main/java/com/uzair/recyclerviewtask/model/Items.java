@@ -6,13 +6,21 @@ public class Items
     discountonoffer, discountscheme, dp_exclusive_tax, dp_inclusive_tax, gid, gid_discount_offer,
     gid_trade_activation,gid_trade_activation_plus, gid_trade_itemwise, is_advance_tax, is_gst,
     isfoc, isoffer, productid, image, name, uid , sku_code , stock;
-
+    private String productName;
 
 
 
     public Items() {
     }
 
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public String getStock() {
         return stock;
