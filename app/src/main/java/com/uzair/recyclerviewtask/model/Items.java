@@ -8,6 +8,8 @@ public class Items
     isfoc, isoffer, productid, image, name, uid , sku_code , stock;
 
 
+
+
     public Items() {
     }
 

@@ -102,7 +102,6 @@ implements Filterable
 
     }
 
-
     /// get last product id
     public String getLastItemId() {
         return productList.get(productList.size() - 1).getUid();
