@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
     public static boolean mIsLoading = false;
     public static int mPostsPerPage = 4;
 
-    //// section adpaer with intruder shanky
+    //// section adapter with intruder shanky lib
     //  AdapterForSectionRecyclerView adapterForSectionRecyclerView;
     List<Items> mItemsList;
 
     //// sticky header adpater
     MyAdapter adapter;
-    List<Product> productList;
+   // List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        productList = new ArrayList<>();
+        //productList = new ArrayList<>();
         rvProducts = findViewById(R.id.rvProducts);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         rvProducts.setLayoutManager(layoutManager);
@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
     private void getProducts(String nodeId) {
         Query query;
 
-
         if (nodeId == null) {
             query = FirebaseDatabase.getInstance().getReference()
                     .child("Products")
@@ -139,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     Product product = snap.getValue(Product.class);
                     adapter.setLastProductId(product.getUid());
-
-                    productList.add(product);
+                   // productList.add(product);
 
                     Query query = FirebaseDatabase.getInstance().getReference().child("Items")
                             .orderByChild("productid")
@@ -188,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /// item decoration
     private RecyclerSectionItemDecoration.SectionCallback getSectionCallback(final List<Items> item) {
         return new RecyclerSectionItemDecoration.SectionCallback() {
             @Override

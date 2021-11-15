@@ -28,9 +28,6 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration
         this.sectionCallback = sectionCallback;
     }
 
-
-
-
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
